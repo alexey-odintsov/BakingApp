@@ -5,4 +5,19 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="ingredient_type_cup">Cup</string>
+    <string name="ingredient_type_tblsp">Tablespoon</string>
+    <string name="ingredient_type_tsp">Teaspoon</string>
+    <string name="ingredient_type_k">Kilogram</string>
+    <string name="ingredient_type_g">Gram</string>
+    <string name="ingredient_type_oz">Oz</string>
+    <string name="ingredient_type_unit">Unit</string>
+
+    <string name="ingredient_type_cup_abbr">cup</string>
+    <string name="ingredient_type_tblsp_abbr">tbsp</string>
+    <string name="ingredient_type_tsp_abbr">tsp</string>
+    <string name="ingredient_type_k_abbr">kg</string>
+    <string name="ingredient_type_g_abbr">g</string>
+    <string name="ingredient_type_oz_abbr">oz</string>
+    <string name="ingredient_type_unit_abbr">unit</string>
 </resources>
