@@ -13,21 +13,21 @@ import com.alekso.bakingapp.R;
  * Created by alekso on 24/03/2018.
  */
 
-public class RecipeDetailFragment extends Fragment {
+public class RecipeStepsListFragment extends Fragment {
 
-    public RecipeDetailFragment() {
+    public RecipeStepsListFragment() {
 
     }
 
-    public static RecipeDetailFragment newInstance() {
-        RecipeDetailFragment fragment = new RecipeDetailFragment();
+    public static RecipeStepsListFragment newInstance() {
+        final RecipeStepsListFragment fragment = new RecipeStepsListFragment();
         return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
+        final View v = inflater.inflate(R.layout.fragment_recipe_steps_list, container, false);
         return v;
     }
 }

@@ -10,24 +10,25 @@ import android.view.ViewGroup;
 import com.alekso.bakingapp.R;
 
 /**
- * Created by alekso on 17/03/2018.
+ * Created by alekso on 24/03/2018.
  */
 
-public class RecipesListFragment extends Fragment {
+public class RecipeStepFragment extends Fragment {
 
-    public RecipesListFragment() {
-        // do nothing
+    public RecipeStepFragment() {
+
     }
 
-    public static RecipesListFragment newInstance() {
-        final RecipesListFragment fragment = new RecipesListFragment();
+    public static RecipeStepFragment newInstance() {
+        final RecipeStepFragment fragment = new RecipeStepFragment();
         return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_recipes_list, container, false);
+        final View v = inflater.inflate(R.layout.fragment_recipe_step, container, false);
         return v;
     }
+
 }
