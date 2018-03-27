@@ -1,5 +1,6 @@
 package com.alekso.bakingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+
+import com.alekso.bakingapp.ui.RecipeStepFragment;
 
 /**
  * Base activity that shares same base layout with NavigationDrawer
@@ -80,6 +83,26 @@ public class BaseActivity extends AppCompatActivity
         FrameLayout detailFragment = findViewById(R.id.detail);
         if (detailFragment != null) {
             isTwoPane = true;
+        }
+    }
+
+    public void showRecipeSteps(int recipeId) {
+        Intent intent = new Intent(this, RecipeStepsListActivity.class);
+        intent.putExtra("recipeId", recipeId);
+        startActivity(intent);
+    }
+
+    public void showRecipeStep(int recipeId, int stepId) {
+        if (isTwoPane) {
+            RecipeStepFragment recipeStepFragment = RecipeStepFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.detail, recipeStepFragment)
+                    .commit();
+        } else {
+            Intent intent = new Intent(this, RecipeStepActivity.class);
+            intent.putExtra("recipeId", recipeId);
+            intent.putExtra("stepId", stepId);
+            startActivity(intent);
         }
     }
 }

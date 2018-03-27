@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.alekso.bakingapp.ui.RecipeStepsListFragment;
 import com.alekso.bakingapp.ui.RecipesListFragment;
 
 public class RecipesListActivity extends BaseActivity {
@@ -14,15 +13,7 @@ public class RecipesListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         RecipesListFragment listFragment = RecipesListFragment.newInstance();
-        if (isTwoPane) {
-            RecipeStepsListFragment detailFragment = RecipeStepsListFragment.newInstance();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.list, listFragment)
-                    .replace(R.id.detail, detailFragment)
-                    .commit();
-        } else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.content, listFragment).commit();
-        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.content, listFragment).commit();
     }
 
 

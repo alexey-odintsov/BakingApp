@@ -1,0 +1,9 @@
+{
+  "data": [
+    {"id": "1", "shortDescription": "Recipe Introduction"},
+    {"id": "2", "shortDescription": "Starting prep"},
+    {"id": "3", "shortDescription": "Prep the cookie crust."},
+    {"id": "4", "shortDescription": "Press the crust into baking form."},
+    {"id": "5", "shortDescription": "Start filling prep"}
+  ]
+}

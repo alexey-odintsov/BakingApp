@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alekso.bakingapp.BaseActivity;
 import com.alekso.bakingapp.R;
 
 /**
@@ -28,6 +29,12 @@ public class RecipesListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_recipes_list, container, false);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((BaseActivity)getActivity()).showRecipeSteps(12);
+            }
+        });
         return v;
     }
 }

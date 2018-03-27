@@ -8,7 +8,7 @@ import com.alekso.bakingapp.ui.RecipeStepFragment;
  * Created by alekso on 24/03/2018.
  */
 
-public class StepActivity extends BaseActivity {
+public class RecipeStepActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
