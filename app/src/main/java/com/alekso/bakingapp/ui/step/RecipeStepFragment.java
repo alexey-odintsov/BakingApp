@@ -1,4 +1,4 @@
-package com.alekso.bakingapp.ui;
+package com.alekso.bakingapp.ui.step;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

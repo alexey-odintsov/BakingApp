@@ -1,10 +1,12 @@
-package com.alekso.bakingapp;
+package com.alekso.bakingapp.ui.recipes;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.alekso.bakingapp.ui.RecipesListFragment;
+import com.alekso.bakingapp.BaseActivity;
+import com.alekso.bakingapp.R;
+import com.alekso.bakingapp.ui.recipes.RecipesListFragment;
 
 public class RecipesListActivity extends BaseActivity {
 

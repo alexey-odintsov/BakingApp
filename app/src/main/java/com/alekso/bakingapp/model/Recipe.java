@@ -8,8 +8,8 @@ import java.util.Map;
  */
 
 public class Recipe {
-    private long id;
-    private String name;
+    public int id;
+    public String name;
     /**
      * Ingredient : quantity
      */
@@ -17,4 +17,9 @@ public class Recipe {
     private List<Step> steps;
     private int servings;
     private String image;
+
+    public Recipe(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
