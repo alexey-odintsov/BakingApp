@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.recipes.RecipesListActivity"
+            android:name=".BaseActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,8 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.steps.RecipeStepsListActivity" />
-        <activity android:name=".ui.step.RecipeStepActivity" />
     </application>
 
 </manifest>

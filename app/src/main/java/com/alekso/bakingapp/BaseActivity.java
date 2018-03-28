@@ -1,6 +1,5 @@
 package com.alekso.bakingapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,9 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.alekso.bakingapp.ui.recipes.RecipesListFragment;
 import com.alekso.bakingapp.ui.step.RecipeStepFragment;
-import com.alekso.bakingapp.ui.step.RecipeStepActivity;
-import com.alekso.bakingapp.ui.steps.RecipeStepsListActivity;
+import com.alekso.bakingapp.ui.steps.RecipeStepsListFragment;
 
 /**
  * Base activity that shares same base layout with NavigationDrawer
@@ -44,6 +43,9 @@ public class BaseActivity extends AppCompatActivity
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        showRecipesList();
 
     }
 
@@ -89,10 +91,36 @@ public class BaseActivity extends AppCompatActivity
         }
     }
 
+    private void showRecipesList() {
+        RecipesListFragment listFragment = RecipesListFragment.newInstance();
+        if (isTwoPane) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.list, listFragment)
+                    .addToBackStack("recipes")
+                    .commit();
+        } else {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content, listFragment)
+                    //.addToBackStack("recipes")
+                    .commit();
+        }
+    }
+
     public void showRecipeSteps(int recipeId) {
-        Intent intent = new Intent(this, RecipeStepsListActivity.class);
-        intent.putExtra("recipeId", recipeId);
-        startActivity(intent);
+        RecipeStepsListFragment listFragment = RecipeStepsListFragment.newInstance(recipeId);
+        if (isTwoPane) {
+            RecipeStepFragment detailFragment = RecipeStepFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.list, listFragment)
+                    .replace(R.id.detail, detailFragment)
+                    .addToBackStack("recipe")
+                    .commit();
+        } else {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content, listFragment)
+                    .addToBackStack("recipe")
+                    .commit();
+        }
     }
 
     public void showRecipeStep(int recipeId, int stepId) {
@@ -100,12 +128,14 @@ public class BaseActivity extends AppCompatActivity
             RecipeStepFragment recipeStepFragment = RecipeStepFragment.newInstance();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.detail, recipeStepFragment)
+                    .addToBackStack("step")
                     .commit();
         } else {
-            Intent intent = new Intent(this, RecipeStepActivity.class);
-            intent.putExtra("recipeId", recipeId);
-            intent.putExtra("stepId", stepId);
-            startActivity(intent);
+            RecipeStepFragment stepFragment = RecipeStepFragment.newInstance();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content, stepFragment)
+                    .addToBackStack("step")
+                    .commit();
         }
     }
 }
