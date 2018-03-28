@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.alekso.bakingapp.BaseActivity;
+import com.alekso.bakingapp.MainActivity;
 import com.alekso.bakingapp.R;
 
 /**
@@ -43,7 +43,7 @@ public class RecipeStepsListFragment extends Fragment {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((BaseActivity) getActivity()).showRecipeStep(recipeId, 0);
+                ((MainActivity) getActivity()).showRecipeStep(recipeId, 0);
             }
         });
         return v;

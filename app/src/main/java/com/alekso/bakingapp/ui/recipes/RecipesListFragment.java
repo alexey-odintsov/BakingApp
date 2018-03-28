@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alekso.bakingapp.BaseActivity;
+import com.alekso.bakingapp.MainActivity;
 import com.alekso.bakingapp.R;
 import com.alekso.bakingapp.data.DataRepository;
 
@@ -33,7 +33,7 @@ public class RecipesListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final boolean isTwoPane = ((BaseActivity) getActivity()).isTwoPane;
+        final boolean isTwoPane = ((MainActivity) getActivity()).isTwoPane;
 
         final View v = inflater.inflate(R.layout.fragment_recipes_list, container, false);
         final RecyclerView recyclerView = v.findViewById(R.id.list);
@@ -43,7 +43,7 @@ public class RecipesListFragment extends Fragment {
                     @Override
                     public void onItemClick(int recipeId) {
                         Log.d(TAG, "onItemClick #" + recipeId);
-                        ((BaseActivity) getActivity()).showRecipeSteps(recipeId);
+                        ((MainActivity) getActivity()).showRecipeSteps(recipeId);
                     }
                 });
         recyclerView.setAdapter(adapter);

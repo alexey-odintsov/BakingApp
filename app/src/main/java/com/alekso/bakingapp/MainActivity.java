@@ -21,10 +21,10 @@ import com.alekso.bakingapp.ui.steps.RecipeStepsListFragment;
  * Created by alekso on 24/03/2018.
  */
 
-public class BaseActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public boolean isTwoPane;
+    private boolean isTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
