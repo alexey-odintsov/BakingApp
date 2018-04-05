@@ -24,7 +24,7 @@ import com.alekso.bakingapp.ui.steps.RecipeStepsListFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private boolean isTwoPane;
+    public boolean isTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity
     public void showRecipeSteps(int recipeId) {
         RecipeStepsListFragment listFragment = RecipeStepsListFragment.newInstance(recipeId);
         if (isTwoPane) {
-            RecipeStepFragment detailFragment = RecipeStepFragment.newInstance();
+            RecipeStepFragment detailFragment = RecipeStepFragment.newInstance(recipeId, 0);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.list, listFragment)
                     .replace(R.id.detail, detailFragment)
@@ -125,13 +125,13 @@ public class MainActivity extends AppCompatActivity
 
     public void showRecipeStep(int recipeId, int stepId) {
         if (isTwoPane) {
-            RecipeStepFragment recipeStepFragment = RecipeStepFragment.newInstance();
+            RecipeStepFragment recipeStepFragment = RecipeStepFragment.newInstance(recipeId, stepId);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.detail, recipeStepFragment)
                     .addToBackStack("step")
                     .commit();
         } else {
-            RecipeStepFragment stepFragment = RecipeStepFragment.newInstance();
+            RecipeStepFragment stepFragment = RecipeStepFragment.newInstance(recipeId, stepId);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content, stepFragment)
                     .addToBackStack("step")
