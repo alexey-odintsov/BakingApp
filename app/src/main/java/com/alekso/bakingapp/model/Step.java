@@ -5,8 +5,13 @@ package com.alekso.bakingapp.model;
  */
 
 public class Step {
-    private int id;
-    private String shortDescription;
+    public int id;
+    public String shortDescription;
     private String videoUrl;
     private String thumbnailUrl;
+
+    public Step(int id, String shortDescription) {
+        this.id = id;
+        this.shortDescription = shortDescription;
+    }
 }

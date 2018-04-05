@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +15,16 @@ import android.widget.TextView;
 
 import com.alekso.bakingapp.MainActivity;
 import com.alekso.bakingapp.R;
+import com.alekso.bakingapp.data.DataRepository;
+import com.alekso.bakingapp.ui.recipes.RecipesAdapter;
+import com.alekso.bakingapp.ui.step.RecipeStepsAdapter;
 
 /**
  * Created by alekso on 24/03/2018.
  */
 
 public class RecipeStepsListFragment extends Fragment {
+    public static final String TAG = RecipeStepsListFragment.class.getSimpleName();
 
     public static final String PARAM_RECIPE_ID = "recipeId";
 
@@ -37,6 +45,8 @@ public class RecipeStepsListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final boolean isTwoPane = ((MainActivity) getActivity()).isTwoPane;
+
         final View view = inflater.inflate(R.layout.fragment_recipe_steps_list, container, false);
 
         if (getArguments() != null) {
@@ -44,7 +54,18 @@ public class RecipeStepsListFragment extends Fragment {
         }
         final TextView tvTitle = view.findViewById(R.id.tv_title);
         tvTitle.setText("RECIPE #" + recipeId + " STEPS");
-        view.setOnClickListener(v -> ((MainActivity) getActivity()).showRecipeStep(recipeId, 0));
+
+        final RecyclerView recyclerView = view.findViewById(R.id.list);
+        final RecipeStepsAdapter adapter = new RecipeStepsAdapter(recipeId,
+                DataRepository.getInstance().getRecipeSteps(),
+                (recipeId, stepId) -> {
+                    Log.d(TAG, "onItemClick #" + recipeId);
+                    ((MainActivity) getActivity()).showRecipeStep(recipeId, stepId);
+                });
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(isTwoPane ?
+                new GridLayoutManager(getContext(), 3) :
+                new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         return view;
     }
 }
