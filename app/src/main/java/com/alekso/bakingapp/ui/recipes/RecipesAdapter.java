@@ -22,14 +22,15 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         this.onRecipeClickListener = onRecipeClickListener;
     }
 
+    @NonNull
     @Override
-    public RecipesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecipesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
         return new ViewHolder(view, onRecipeClickListener);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.name.setText(items.get(position).name);
     }
 

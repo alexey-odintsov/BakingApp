@@ -1,6 +1,7 @@
 package com.alekso.bakingapp.ui.steps;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +17,9 @@ import com.alekso.bakingapp.R;
  */
 
 public class RecipeStepsListFragment extends Fragment {
+
+    public static final String PARAM_RECIPE_ID = "recipeId";
+
     private int recipeId;
 
     public RecipeStepsListFragment() {
@@ -25,27 +29,22 @@ public class RecipeStepsListFragment extends Fragment {
     public static RecipeStepsListFragment newInstance(int recipeId) {
         final RecipeStepsListFragment fragment = new RecipeStepsListFragment();
         Bundle params = new Bundle();
-        params.putInt("recipeId", recipeId);
+        params.putInt(PARAM_RECIPE_ID, recipeId);
         fragment.setArguments(params);
         return fragment;
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_recipe_steps_list, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_recipe_steps_list, container, false);
 
         if (getArguments() != null) {
-            recipeId = getArguments().getInt("recipeId");
+            recipeId = getArguments().getInt(PARAM_RECIPE_ID);
         }
-        final TextView tvTitle = v.findViewById(R.id.tv_title);
+        final TextView tvTitle = view.findViewById(R.id.tv_title);
         tvTitle.setText("RECIPE #" + recipeId + " STEPS");
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).showRecipeStep(recipeId, 0);
-            }
-        });
-        return v;
+        view.setOnClickListener(v -> ((MainActivity) getActivity()).showRecipeStep(recipeId, 0));
+        return view;
     }
 }
