@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alekso.bakingapp.App;
 import com.alekso.bakingapp.MainActivity;
 import com.alekso.bakingapp.R;
 import com.alekso.bakingapp.data.DataRepository;
@@ -39,7 +40,7 @@ public class RecipesListFragment extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_recipes_list, container, false);
         final RecyclerView recyclerView = v.findViewById(R.id.list);
         final RecipesAdapter adapter = new RecipesAdapter(
-                DataRepository.getInstance().getAllRecipes(),
+                ((App) getActivity().getApplication()).getRepository().getAllRecipes(),
                 recipeId -> {
                     Log.d(TAG, "onItemClick #" + recipeId);
                     ((MainActivity) getActivity()).showRecipeSteps(recipeId);

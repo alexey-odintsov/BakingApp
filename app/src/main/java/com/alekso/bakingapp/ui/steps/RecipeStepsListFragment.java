@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alekso.bakingapp.App;
 import com.alekso.bakingapp.MainActivity;
 import com.alekso.bakingapp.R;
 import com.alekso.bakingapp.data.DataRepository;
@@ -57,7 +58,7 @@ public class RecipeStepsListFragment extends Fragment {
 
         final RecyclerView recyclerView = view.findViewById(R.id.list);
         final RecipeStepsAdapter adapter = new RecipeStepsAdapter(recipeId,
-                DataRepository.getInstance().getRecipeSteps(),
+                ((App) getActivity().getApplication()).getRepository().getRecipeSteps(),
                 (recipeId, stepId) -> {
                     Log.d(TAG, "onItemClick #" + recipeId);
                     ((MainActivity) getActivity()).showRecipeStep(recipeId, stepId);

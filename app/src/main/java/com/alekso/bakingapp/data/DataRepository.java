@@ -3,6 +3,7 @@ package com.alekso.bakingapp.data;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.alekso.bakingapp.data.local.AbsDatabase;
 import com.alekso.bakingapp.model.Recipe;
 import com.alekso.bakingapp.model.Step;
 
@@ -13,11 +14,21 @@ public class DataRepository {
 
     @Nullable
     private static DataRepository instance;
+    private final AbsDatabase database;
+
+
+    private DataRepository(@NonNull final AbsDatabase database) {
+        this.database = database;
+    }
 
     @NonNull
-    public static DataRepository getInstance() {
+    public static DataRepository getInstance(@NonNull final AbsDatabase database) {
         if (instance == null) {
-            instance = new DataRepository();
+            synchronized (DataRepository.class) {
+                if (instance == null) {
+                    instance = new DataRepository(database);
+                }
+            }
         }
         return instance;
     }
@@ -30,9 +41,11 @@ public class DataRepository {
             recipes.add(new Recipe(i, "recipe #" + i));
         }
 
+
         return recipes;
     }
 
+    @NonNull
     public List<Step> getRecipeSteps() {
         ArrayList<Step> items = new ArrayList<>();
 
