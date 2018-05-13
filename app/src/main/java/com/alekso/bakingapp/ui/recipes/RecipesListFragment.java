@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import com.alekso.bakingapp.App;
 import com.alekso.bakingapp.MainActivity;
 import com.alekso.bakingapp.R;
-import com.alekso.bakingapp.data.DataRepository;
 
 /**
  * Created by alekso on 17/03/2018.
@@ -39,7 +38,7 @@ public class RecipesListFragment extends Fragment {
 
         final View v = inflater.inflate(R.layout.fragment_recipes_list, container, false);
         final RecyclerView recyclerView = v.findViewById(R.id.list);
-        final RecipesAdapter adapter = new RecipesAdapter(
+        final RecipesAdapter adapter = new RecipesAdapter( // TODO: 13/05/2018 load data in background
                 ((App) getActivity().getApplication()).getRepository().getAllRecipes(),
                 recipeId -> {
                     Log.d(TAG, "onItemClick #" + recipeId);

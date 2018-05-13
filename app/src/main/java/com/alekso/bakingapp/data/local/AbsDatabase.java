@@ -8,7 +8,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.alekso.bakingapp.AppExecutors;
+import com.alekso.bakingapp.data.local.dao.RecipesDao;
 import com.alekso.bakingapp.data.local.entity.RecipeEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Database(entities = {RecipeEntity.class}, version = 1)
 public abstract class AbsDatabase extends RoomDatabase {
@@ -28,7 +32,8 @@ public abstract class AbsDatabase extends RoomDatabase {
                                     executors.diskIO().execute(() -> {
                                         AbsDatabase database = AbsDatabase.getInstance(context, executors);
                                         database.runInTransaction(() -> {
-                                            // populate db
+                                            List<RecipeEntity> recipes = Mock.generate(20);
+                                            database.recipesDao().insertAll(recipes);
                                         });
                                     });
                                 }
@@ -39,4 +44,6 @@ public abstract class AbsDatabase extends RoomDatabase {
         }
         return instance;
     }
+
+    public abstract RecipesDao recipesDao();
 }

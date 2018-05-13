@@ -15,8 +15,8 @@ public class Recipe {
      */
     private Map<Ingredient, Float> ingredients;
     private List<Step> steps;
-    private int servings;
-    private String image;
+    public int servings;
+    public String image;
 
     public Recipe(int id, String name) {
         this.id = id;
