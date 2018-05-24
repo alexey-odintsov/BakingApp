@@ -1,5 +1,7 @@
 package com.alekso.bakingapp.ui.recipes;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,9 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alekso.bakingapp.App;
 import com.alekso.bakingapp.MainActivity;
 import com.alekso.bakingapp.R;
+import com.alekso.bakingapp.model.Recipe;
+
+import java.util.List;
 
 /**
  * Created by alekso on 17/03/2018.
@@ -23,12 +27,23 @@ import com.alekso.bakingapp.R;
 public class RecipesListFragment extends Fragment {
     public static final String TAG = RecipesListFragment.class.getSimpleName();
 
+    private RecipesAdapter adapter;
+
     public RecipesListFragment() {
         // do nothing
     }
 
+    @NonNull
     public static RecipesListFragment newInstance() {
         return new RecipesListFragment();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        final RecipesViewModel viewModel = ViewModelProviders.of(this).get(RecipesViewModel.class);
+        viewModel.getRecipes().observe(this, recipes -> adapter.setItems(recipes));
     }
 
     @Nullable
@@ -38,8 +53,7 @@ public class RecipesListFragment extends Fragment {
 
         final View v = inflater.inflate(R.layout.fragment_recipes_list, container, false);
         final RecyclerView recyclerView = v.findViewById(R.id.list);
-        final RecipesAdapter adapter = new RecipesAdapter( // TODO: 13/05/2018 load data in background
-                ((App) getActivity().getApplication()).getRepository().getAllRecipes(),
+        adapter = new RecipesAdapter(
                 recipeId -> {
                     Log.d(TAG, "onItemClick #" + recipeId);
                     ((MainActivity) getActivity()).showRecipeSteps(recipeId);
@@ -48,6 +62,7 @@ public class RecipesListFragment extends Fragment {
         recyclerView.setLayoutManager(isTwoPane ?
                 new GridLayoutManager(getContext(), 3) :
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
         return v;
     }
 }

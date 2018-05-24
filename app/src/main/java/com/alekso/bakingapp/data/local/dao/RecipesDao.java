@@ -1,5 +1,6 @@
 package com.alekso.bakingapp.data.local.dao;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -11,12 +12,16 @@ import java.util.List;
 
 @Dao
 public interface RecipesDao {
+
     @Query("SELECT * FROM recipes")
-    List<RecipeEntity> loadAll();
+    LiveData<List<RecipeEntity>> loadAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<RecipeEntity> products);
+    void insertAll(List<RecipeEntity> recipes);
 
-    @Query("select * from recipes where id = :recipeId")
-    RecipeEntity load(int recipeId);
+    @Query("SELECT * FROM recipes WHERE id = :recipeId")
+    LiveData<RecipeEntity> load(int recipeId);
+
+    @Query("SELECT * FROM recipes WHERE id = :recipeId")
+    RecipeEntity loadProductSync(int recipeId);
 }

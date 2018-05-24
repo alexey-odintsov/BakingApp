@@ -1,8 +1,14 @@
 package com.alekso.bakingapp.data;
 
+import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.alekso.bakingapp.data.local.AbsDatabase;
 import com.alekso.bakingapp.data.local.entity.RecipeEntity;
@@ -17,11 +23,26 @@ public class DataRepository {
 
     @Nullable
     private static DataRepository instance;
+    @NonNull
     private final AbsDatabase database;
-
+    @NonNull
+    private MediatorLiveData<List<RecipeEntity>> observableRecipes;
+    @NonNull
+    private MediatorLiveData<List<Recipe>> recipes;
 
     private DataRepository(@NonNull final AbsDatabase database) {
         this.database = database;
+
+        observableRecipes = new MediatorLiveData<>();
+        recipes = new MediatorLiveData<>();
+
+        observableRecipes.addSource(database.recipesDao().loadAll(), recipeEntities -> {
+            if (database.isCreated().getValue() != null) {
+                observableRecipes.postValue(recipeEntities);
+            }
+        });
+
+        recipes.addSource(observableRecipes, entities -> recipes.postValue(RecipeBuilder.convert(entities)));
     }
 
     @NonNull
@@ -37,18 +58,17 @@ public class DataRepository {
     }
 
     @NonNull
-    public List<Recipe> getAllRecipes() {
-        List<RecipeEntity> entities = database.recipesDao().loadAll();
-        List<Recipe> recipes = new ArrayList<>();
-        for (int i = 0; i < entities.size(); i++) {
-            recipes.add(new RecipeBuilder(entities.get(i)).build());
-        }
+    public LiveData<List<Recipe>> getAllRecipes() {
         return recipes;
+    }
+
+    public LiveData<Recipe> getRecipe(int id) {
+        return Transformations.map(database.recipesDao().load(id), entity -> new RecipeBuilder(entity).build());
     }
 
     @NonNull
     public List<Step> getRecipeSteps() {
-        ArrayList<Step> items = new ArrayList<>();
+        final ArrayList<Step> items = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
             items.add(new Step(i, "step #" + i));

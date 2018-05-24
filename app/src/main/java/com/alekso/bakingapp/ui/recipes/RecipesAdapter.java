@@ -11,17 +11,25 @@ import android.widget.TextView;
 import com.alekso.bakingapp.R;
 import com.alekso.bakingapp.model.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
     @NonNull
     private OnRecipeClickListener onRecipeClickListener;
     @NonNull
-    private List<Recipe> items;
+    private List<Recipe> items = new ArrayList<>();
 
-    public RecipesAdapter(@NonNull List<Recipe> items, @NonNull OnRecipeClickListener onRecipeClickListener) {
-        this.items = items;
+    public RecipesAdapter(@NonNull OnRecipeClickListener onRecipeClickListener) {
         this.onRecipeClickListener = onRecipeClickListener;
+    }
+
+    public void setItems(@Nullable List<Recipe> items) {
+        this.items.clear();
+        if (items != null) {
+            this.items.addAll(items);
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -50,7 +58,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         private OnRecipeClickListener onRecipeClickListener;
         private TextView name;
 
-        public ViewHolder(View itemView, @NonNull OnRecipeClickListener onRecipeClickListener) {
+        ViewHolder(@NonNull View itemView, @NonNull OnRecipeClickListener onRecipeClickListener) {
             super(itemView);
             itemView.setOnClickListener(this);
             this.onRecipeClickListener = onRecipeClickListener;

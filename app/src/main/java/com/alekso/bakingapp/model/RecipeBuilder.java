@@ -1,6 +1,12 @@
 package com.alekso.bakingapp.model;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.alekso.bakingapp.data.local.entity.RecipeEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeBuilder {
     private Recipe recipe;
@@ -11,6 +17,18 @@ public class RecipeBuilder {
         recipe.image = entity.getImage();
     }
 
+    @NonNull
+    public static List<Recipe> convert(@Nullable List<RecipeEntity> entities) {
+        List<Recipe> recipes = new ArrayList<>();
+        if (entities != null) {
+            for (RecipeEntity entity : entities) {
+                recipes.add(new RecipeBuilder(entity).build());
+            }
+        }
+        return recipes;
+    }
+
+    @NonNull
     public Recipe build() {
         return recipe;
     }
