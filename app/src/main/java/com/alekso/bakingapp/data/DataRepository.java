@@ -1,14 +1,10 @@
 package com.alekso.bakingapp.data;
 
-import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.Transformations;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.alekso.bakingapp.data.local.AbsDatabase;
 import com.alekso.bakingapp.data.local.entity.RecipeEntity;
@@ -27,22 +23,16 @@ public class DataRepository {
     private final AbsDatabase database;
     @NonNull
     private MediatorLiveData<List<RecipeEntity>> observableRecipes;
-    @NonNull
-    private MediatorLiveData<List<Recipe>> recipes;
 
     private DataRepository(@NonNull final AbsDatabase database) {
         this.database = database;
 
         observableRecipes = new MediatorLiveData<>();
-        recipes = new MediatorLiveData<>();
-
         observableRecipes.addSource(database.recipesDao().loadAll(), recipeEntities -> {
             if (database.isCreated().getValue() != null) {
                 observableRecipes.postValue(recipeEntities);
             }
         });
-
-        recipes.addSource(observableRecipes, entities -> recipes.postValue(RecipeBuilder.convert(entities)));
     }
 
     @NonNull
@@ -59,7 +49,7 @@ public class DataRepository {
 
     @NonNull
     public LiveData<List<Recipe>> getAllRecipes() {
-        return recipes;
+        return Transformations.map(observableRecipes, RecipeBuilder::convert);
     }
 
     public LiveData<Recipe> getRecipe(int id) {
