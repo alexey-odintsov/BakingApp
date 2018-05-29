@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeBuilder {
+    @NonNull
     private Recipe recipe;
 
     public RecipeBuilder(RecipeEntity entity) {

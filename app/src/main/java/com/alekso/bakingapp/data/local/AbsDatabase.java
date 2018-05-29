@@ -13,13 +13,15 @@ import android.util.Log;
 
 import com.alekso.bakingapp.AppExecutors;
 import com.alekso.bakingapp.data.local.dao.RecipesDao;
+import com.alekso.bakingapp.data.local.entity.IngredientEntity;
 import com.alekso.bakingapp.data.local.entity.RecipeEntity;
+import com.alekso.bakingapp.data.local.entity.StepEntity;
 
 import java.util.List;
 
-@Database(entities = {RecipeEntity.class}, version = 4)
+@Database(entities = {RecipeEntity.class, StepEntity.class, IngredientEntity.class}, version = 1)
 public abstract class AbsDatabase extends RoomDatabase {
-    private static final String DB_NAME = "bakingapp.db";
+    private static final String DB_NAME = "bakingapp3.db";
     @Nullable
     private static AbsDatabase instance;
     @NonNull
@@ -31,6 +33,7 @@ public abstract class AbsDatabase extends RoomDatabase {
             synchronized (AbsDatabase.class) {
                 if (instance == null) {
                     instance = Room.databaseBuilder(context, AbsDatabase.class, DB_NAME)
+                            .fallbackToDestructiveMigration()
                             .addCallback(new Callback() {
                                 @Override
                                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -40,7 +43,7 @@ public abstract class AbsDatabase extends RoomDatabase {
                                         AbsDatabase database = AbsDatabase.getInstance(context, executors);
                                         database.runInTransaction(() -> {
                                             List<RecipeEntity> recipes = Mock.generate(20);
-                                            database.recipesDao().insertAll(recipes);
+                                            database.recipesDao().insertRecipes(recipes);
                                             database.setCreated();
                                         });
                                     });

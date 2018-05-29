@@ -53,7 +53,7 @@ public class DataRepository {
     }
 
     public LiveData<Recipe> getRecipe(int id) {
-        return Transformations.map(database.recipesDao().load(id), entity -> new RecipeBuilder(entity).build());
+        return Transformations.map(database.recipesDao().loadRecipes(id), entity -> new RecipeBuilder(entity).build());
     }
 
     @NonNull

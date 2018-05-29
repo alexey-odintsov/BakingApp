@@ -10,7 +10,8 @@ import com.alekso.bakingapp.R;
 
 public class Ingredient {
     private String name;
-    private TYPE type;
+    private TYPE measure;
+    private float quantity;
 
     public enum TYPE {
         CUP(R.string.ingredient_type_cup, R.string.ingredient_type_cup_abbr),
